@@ -23,4 +23,6 @@
              "I don't do a whole lot ... yet."
   [& args]
 
-  (println (take 5 pubmaps)))
+
+
+   (println "most common " (take 5 (reverse (sort-by last (frequencies (map :name pubmaps)))))))
