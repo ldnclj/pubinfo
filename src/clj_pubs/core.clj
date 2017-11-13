@@ -33,9 +33,9 @@
 (defn top-names [n]
   (take n name-freq))
 
- (defn -main
-   "I don't do a whole lot ... yet."
-   [& args])
-   (->> (top-names 10) 
-        (map println)
-        dorun))
+(defn -main
+  "I don't do a whole lot ... yet."
+  [& args]
+  (->> (top-names 10) 
+       (map println)
+       dorun))
