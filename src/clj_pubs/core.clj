@@ -1,5 +1,6 @@
 (ns clj-pubs.core
-  (:gen-class))
+  (:gen-class)
+  (:require [clojure.string :as str]))
 
 (require '[clojure.data.csv :as csv]
          '[clojure.java.io :as io])
@@ -18,11 +19,23 @@
 
 (def pubmaps (csv-data->maps pubs))
 
+(defn clean-name [name]
+  (str/replace-first (str/lower-case name) "the " ""))
+
+(def name-freq
+  (->> pubmaps
+       (map :name)
+       (map clean-name)
+       frequencies
+       (sort-by val)
+       reverse))
+
+(defn top-names [n]
+  (take n name-freq))
 
  (defn -main
-             "I don't do a whole lot ... yet."
-  [& args]
-
-
-
-   (println "most common " (take 5 (reverse (sort-by last (frequencies (map :name pubmaps)))))))
+   "I don't do a whole lot ... yet."
+   [& args])
+   (->> (top-names 10) 
+        (map println)
+        dorun))
