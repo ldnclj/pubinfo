@@ -30,12 +30,32 @@
        (sort-by val)
        reverse))
 
+(def name-len
+  (->> pubmaps
+       (map :name)
+       (map clean-name)
+       (sort-by count)
+       reverse))
+
 (defn top-names [n]
   (take n name-freq))
 
+(defn top-names-len [n]
+  (take n name-len))
+
  (defn -main
    "I don't do a whole lot ... yet."
-   [& args])
-   (->> (top-names 10) 
+   [& args]
+   (println "=======")
+   (println "Most common")
+   (println "=======")
+   (->> (top-names 10)
         (map println)
-        dorun))
+        dorun)
+   (println "=======")
+   (println "Longest")
+   (println "=======")
+   (->> (top-names-len 10)
+        (map println)
+        dorun)
+   )
