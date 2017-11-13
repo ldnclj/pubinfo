@@ -18,10 +18,9 @@
 
 (def pubmaps (csv-data->maps pubs))
 
-(defn -main
+
+ (defn -main
              "I don't do a whole lot ... yet."
   [& args]
-
-
 
   (println (take 5 pubmaps)))
