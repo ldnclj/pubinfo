@@ -57,5 +57,5 @@
    (println "=======")
    (->> (top-names-len 10)
         (map println)
-        )
+        dorun)
    )
