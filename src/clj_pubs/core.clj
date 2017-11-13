@@ -22,8 +22,8 @@
 (defn clean-name [name]
   (str/replace-first (str/lower-case name) "the " ""))
 
-(def name-freq
-  (->> pubmaps
+(defn name-freq [pubs]
+  (->> pubs
        (map :name)
        (map clean-name)
        frequencies
@@ -38,9 +38,15 @@
        reverse))
 
 (defn top-names [n]
-  (take n name-freq))
+  (take n (name-freq pubmaps)))
 
-(defn top-names-len [n]
+(defn top-by-la [la n]
+  (->> pubmaps
+       (filter #(= la (:la %)))
+       name-freq
+       (take n)))
+
+ (defn top-names-len [n]
   (take n name-len))
 
  (defn -main
@@ -56,4 +62,9 @@
    (println "Longest")
    (println "=======")
    (mapv println (top-names-len 10))
-   )
+   (println "=======")
+   (println "Top by Local auth")
+   (println "=======")
+   (->> (top-by-la "Westminster" 10)
+        (map println)
+        dorun))
