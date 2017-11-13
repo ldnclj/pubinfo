@@ -22,8 +22,8 @@
 (defn clean-name [name]
   (str/replace-first (str/lower-case name) "the " ""))
 
-(def name-freq
-  (->> pubmaps
+(defn name-freq [pubs]
+  (->> pubs
        (map :name)
        (map clean-name)
        frequencies
@@ -31,11 +31,20 @@
        reverse))
 
 (defn top-names [n]
-  (take n name-freq))
+  (take n (name-freq pubmaps)))
+
+(defn top-by-la [la n]
+  (->> pubmaps
+       (filter #(= la (:la %)))
+       name-freq
+       (take n)))
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (->> (top-names 10) 
+  (->> (top-names 15) 
+       (map println)
+       dorun)
+  (->> (top-by-la "Westminster" 10)
        (map println)
        dorun))
