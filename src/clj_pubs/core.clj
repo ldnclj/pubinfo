@@ -55,7 +55,5 @@
    (println "=======")
    (println "Longest")
    (println "=======")
-   (->> (top-names-len 10)
-        (map println)
-        dorun)
+   (mapv println (top-names-len 10))
    )
